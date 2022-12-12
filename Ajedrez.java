@@ -88,6 +88,11 @@ public class Ajedrez {
             if(posicion.matches("a1|b1|c1|d1|e1|f1|g1|h1")){
                 System.out.println("Un peón blanco no puede estar en la primera fila del tablero.");
             }
+            else if(posicion.matches("a2|b2|c2|d2|e2|f2|g2|h2")){
+                int movPeon = Integer.parseInt(posicion.charAt(1)+"")+1;
+                int movPeon1 = Integer.parseInt(posicion.charAt(1)+"")+2;
+                System.out.println("Tu peón se podrá mover a: " + posicion.charAt(0) + "" + movPeon + ", o: " + posicion.charAt(0) + movPeon1 + " al ser el primer movimiento.");
+            }
             else if(posicion.matches("a8|b8|c8|d8|e8|f8|g8|h8")){
                 System.out.println("El peon al estar en la última fila del tablero se convierte en una dama.");
             }
@@ -107,6 +112,11 @@ public class Ajedrez {
             String posicion= setPosicion();
             if(posicion.matches("a1|b1|c1|d1|e1|f1|g1|h1")){
                 System.out.println("El peon al estar en la primera fila del tablero se convierte en una dama.");
+            }
+            else if(posicion.matches("a7|b7|c7|d7|e7|f7|g7|h7")){
+                int movPeon = Integer.parseInt(posicion.charAt(1)+"")-1;
+                int movPeon1 = Integer.parseInt(posicion.charAt(1)+"")-2;
+                System.out.println("Tu peón se podrá mover a: " + posicion.charAt(0) + "" + movPeon + ", o: " + posicion.charAt(0) + movPeon1 + " al ser el primer movimiento.");
             }
             else if(posicion.matches("a8|b8|c8|d8|e8|f8|g8|h8")){
                 System.out.println("Un peón negro no puede estar en la última fila del tablero.");
