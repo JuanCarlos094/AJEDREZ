@@ -138,38 +138,47 @@ public class Ajedrez {
 
     public static void caballo() {
         String posicion=setPosicion();
-        int x = posicion.charAt(0);
-        int y = Integer.parseInt(String.valueOf(posicion.charAt(1)));
 
 
+        String column = String.valueOf(posicion.charAt(0));
+
+        String row = String.valueOf(posicion.charAt(1));
+
+// Convertir la columna de letra a número (a = 0, b = 1, c = 2, ...)
+        int y = column.charAt(0) - 'a';
+// Convertir la fila de número a índice (1 = 0, 2 = 1, 3 = 2, ...)
+        int x = Integer.parseInt(row) - 1;
+
+// Direcciones posibles para mover el caballo
         int[] dx = {2, 1, -1, -2, -2, -1, 1, 2};
         int[] dy = {1, 2, 2, 1, -1, -2, -2, -1};
 
-
+// Crear una lista para almacenar todas las posiciones posibles del caballo
         List<String> positions = new ArrayList<>();
 
-
+// Recorrer todas las posibles direcciones
         for (int i = 0; i < dx.length; i++) {
-
+            // Calcular la posición a la que se movería el caballo en esa dirección
             int newX = x + dx[i];
             int newY = y + dy[i];
 
-
+            // Comprobar si la nueva posición está dentro del tablero de ajedrez
             if (newX >= 0 && newX < 8 && newY >= 0 && newY < 8) {
-
-                String column = (char) ('a' + newY) + "";
-                String row = (newX + 1) + "";
+                // Convertir la posición del caballo en formato de coordenadas (fila, columna)
+                column = (char) ('a' + newY) + ""; // convertir la columna en letra
+                row =(newX + 1) + ""; // convertir la fila en número
                 String position = column + row;
-
+                // Añadir la posición a la lista
                 positions.add(position);
             }
         }
 
-
-        System.out.println("Posiciones posibles del caballo desde la posición "+posicion.charAt(0)+""+posicion.charAt(1)+":");
+// Mostrar todas las posiciones posibles del caballo
+        System.out.println("Posiciones posibles del caballo desde la posición " + posicion.charAt(0) + posicion.charAt(1) + ":");
         for (String position : positions) {
             System.out.println(position);
         }
     }
+
 
     }
