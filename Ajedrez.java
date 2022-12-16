@@ -59,7 +59,6 @@ public class Ajedrez {
 
     //metodo introduccion pieza
     public static int setPieza(){
-
         System.out.println("En primer lugar, elige la pieza que deseas.");
         System.out.println("1. Peón");
         System.out.println("2. Caballo");
