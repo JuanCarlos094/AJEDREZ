@@ -8,7 +8,7 @@ public class Ajedrez {
         System.out.println("Bienvenido al juego del Ajedrez.");
         System.out.println("-------------------------------------");
 
-        String pieza = setPieza();
+        int pieza = setPieza();
         setColor();
         compararPiezas(pieza);
 
@@ -20,21 +20,19 @@ public class Ajedrez {
 
 
     //metodo validar pieza
-    public static void compararPiezas(String pieza){
-        String[] allpieces = {"peon", "caballo", "alfil", "torre", "reina", "rey"};
-
+    public static void compararPiezas(int pieza){
         String pos;
 
-        if (pieza.equalsIgnoreCase(allpieces[0])){
+        if (pieza == 1){
             pos = setPosicion();
             if(checkPosicion(pos)){
                 peon(pos);
             }
-        }else if (pieza.equalsIgnoreCase(allpieces[1])){
+        }else if (pieza == 2 ){
 
             //Aqui se llamaria al metodo que corresponde a la pieza con la que coincide
 
-        }else if (pieza.equalsIgnoreCase(allpieces[2])){
+        }else if (pieza == 3){
             pos = setPosicion();
             if(checkPosicion(pos)){
                 alf_down_left(pos);
@@ -43,15 +41,20 @@ public class Ajedrez {
                 alf_up_right(pos);
             }
 
-        }else if (pieza.equalsIgnoreCase(allpieces[3])){
+        }else if (pieza == 4){
             pos = setPosicion();
             if (checkPosicion(pos)){
                 torre(pos);
             }
-        }else if (pieza.equalsIgnoreCase(allpieces[4])){
+        }else if (pieza == 5){
             //Aqui se llamaria al metodo que corresponde a la pieza con la que coincide
-        }else if (pieza.equalsIgnoreCase(allpieces[5])){
-            //Aqui se llamaria al metodo que corresponde a la pieza con la que coincide
+
+        }else if (pieza == 6){
+            pos = setPosicion();
+            if (checkPosicion(pos)){
+                rey(pos);
+            }
+
         }else{
             System.out.println("Pieza no valida");
         }
@@ -59,10 +62,16 @@ public class Ajedrez {
 
 
     //metodo introduccion pieza
-    public static String setPieza(){
+    public static int setPieza(){
 
-        System.out.print("En primer lugar, elige la pieza que deseas: ");
-        return sc.nextLine();
+        System.out.println("En primer lugar, elige la pieza que deseas: ");
+        System.out.println("1. Peón");
+        System.out.println("2. Caballo");
+        System.out.println("3. Alfil");
+        System.out.println("4. Torre");
+        System.out.println("5. Dama");
+        System.out.println("6. Rey");
+        return sc.nextInt();
     }
 
 
@@ -312,6 +321,45 @@ public class Ajedrez {
             }
         }
 
+    }
+
+    public static void rey(String posicion) {
+        char ch1 = posicion.charAt(0);
+        char ch2 = posicion.charAt(1);
+
+        System.out.println("El Rey podrá realizar los siguientes movimientos: ");
+        //Up left
+        if(ch1>97 && ch2<56){
+            System.out.print(""+(char)(ch1-1)+(char)(ch2+1)+" ");
+        }
+        //Go forward
+        if(ch2<56){
+            System.out.print(""+ch1+(char)(ch2+1)+" ");
+        }
+        //Up right
+        if(ch1<104 && ch2<56){
+            System.out.print(""+(char)(ch1+1)+(char)(ch2+1)+" ");
+        }
+        //Left
+        if(ch1>97){
+            System.out.print(""+(char)(ch1-1)+ch2+" ");
+        }
+        //Right
+        if(ch1<104){
+            System.out.print(""+(char)(ch1+1)+ch2+" ");
+        }
+        //Down left
+        if(ch1>97 && ch2>49){
+            System.out.print(""+(char)(ch1-1)+(char)(ch2-1)+" ");
+        }
+        //Down
+        if(ch2>49){
+            System.out.print(""+ch1+(char)(ch2-1)+" ");
+        }
+        //Down right
+        if(ch1<104 && ch2>49){
+            System.out.print(""+(char)(ch1+1)+(char)(ch2-1));
+        }
     }
 
 }
