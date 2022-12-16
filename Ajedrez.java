@@ -48,7 +48,9 @@ public class Ajedrez {
             //Dama
         }else if (pieza==6){
             pos = setPosicion();
+            if(checkPosicion(pos)){
             rey(pos);
+            }
         }else{
             System.out.println("Pieza no valida");
         }
@@ -85,19 +87,18 @@ public class Ajedrez {
     }
 
 
-    public static boolean setColor(){
-        System.out.println("¿De qué color es tu pieza? Blanca/Negra.");
+    public static void setColor(){
+        System.out.println("¿De qué color es tu pieza? B/N.");
         String color =sc.next();
-        if(color.equalsIgnoreCase("Blanca")){
-            return blancas=true;
+        if(color.equalsIgnoreCase("Blanca")||color.equalsIgnoreCase("B")){
+            blancas = true;
         }
-        else if(color.equalsIgnoreCase("Negra")){
-            return negras=true;
+        else if(color.equalsIgnoreCase("Negra")||color.equalsIgnoreCase("N")){
+            negras = true;
         }
         else{
             System.out.println("No has elegido un color válido.");
         }
-        return false;
     }
 
 
@@ -264,68 +265,37 @@ public class Ajedrez {
         char ch2 = posicion.charAt(1);
 
         System.out.println("El Rey podrá realizar los siguientes movimientos: ");
-        if(ch1>97 && ch1<104 && ch2>49 && ch2<56){
-            System.out.print(""+(char)(ch1-1)+""+(char)(ch2+1)+" ");
-            System.out.print(""+ch1+""+(char)(ch2+1)+" ");
-            System.out.print(""+(char)(ch1+1)+""+(char)(ch2+1));
-            System.out.print("\n"+(char)(ch1-1)+""+ch2+" ");
-            System.out.print("@ ");
-            System.out.print(""+(char)(ch1+1)+""+ch2);
-            System.out.print("\n"+(char)(ch1-1)+""+(char)(ch2-1)+" ");
-            System.out.print(""+ch1+""+(char)(ch2-1)+" ");
-            System.out.print(""+(char)(ch1+1)+""+(char)(ch2-1));
-        }else if(ch1==97){
-            if(ch2==49){
-                System.out.print(""+ch1+""+(char)(ch2+1)+" ");
-                System.out.print(""+(char)(ch1+1)+""+(char)(ch2+1)+" ");
-                System.out.print("\n@  ");
-                System.out.print(""+(char)(ch1+1)+""+ch2);
-            }else if(ch2==56){
-                System.out.print("@  ");
-                System.out.print(""+(char)(ch1+1)+""+ch2);
-                System.out.print("\n"+ch1+""+(char)(ch2-1)+" ");
-                System.out.print(""+(char)(ch1+1)+""+(char)(ch2-1));
-            }else{
-                System.out.print(""+ch1+""+(char)(ch2+1)+" ");
-                System.out.print(""+(char)(ch1+1)+""+(char)(ch2+1)+" ");
-                System.out.print("\n@  ");
-                System.out.print(""+(char)(ch1+1)+""+ch2);
-                System.out.print("\n"+ch1+""+(char)(ch2-1)+" ");
-                System.out.print(""+(char)(ch1+1)+""+(char)(ch2-1));
-            }
-        }else if(ch1==104){
-            if(ch2==49){
-                System.out.print(""+(char)(ch1-1)+""+(char)(ch2+1)+" ");
-                System.out.print(""+ch1+""+(char)(ch2+1)+" ");
-                System.out.print("\n"+(char)(ch1-1)+""+ch2+" ");
-                System.out.print("@  ");
-            }else if(ch2==56){
-                System.out.print(""+(char)(ch1-1)+""+ch2+" ");
-                System.out.print("@  ");
-                System.out.print("\n"+(char)(ch1-1)+""+(char)(ch2-1)+" ");
-                System.out.print(""+ch1+""+(char)(ch2-1)+" ");
-            }else{
-                System.out.print(""+(char)(ch1-1)+""+(char)(ch2+1)+" ");
-                System.out.print(""+ch1+""+(char)(ch2+1)+" ");
-                System.out.print("\n"+(char)(ch1-1)+""+ch2+" ");
-                System.out.print("@  ");
-                System.out.print("\n"+(char)(ch1-1)+""+(char)(ch2-1)+" ");
-                System.out.print(""+ch1+""+(char)(ch2-1)+" ");
-            }
-        }else if(ch2==49){
-            System.out.print(""+(char)(ch1-1)+""+(char)(ch2+1)+" ");
-            System.out.print(""+ch1+""+(char)(ch2+1)+" ");
-            System.out.print(""+(char)(ch1+1)+""+(char)(ch2+1)+" ");
-            System.out.print("\n"+(char)(ch1-1)+""+ch2+" ");
-            System.out.print("@  ");
-            System.out.print(""+(char)(ch1+1)+""+ch2);
-        }else{
-            System.out.print(""+(char)(ch1-1)+""+ch2+" ");
-            System.out.print("@  ");
-            System.out.print(""+(char)(ch1+1)+""+ch2);
-            System.out.print("\n"+(char)(ch1-1)+""+(char)(ch2-1)+" ");
-            System.out.print(""+ch1+""+(char)(ch2-1)+" ");
-            System.out.print(""+(char)(ch1+1)+""+(char)(ch2-1));
+        //Up left
+        if(ch1>97 && ch2<56){
+            System.out.print(""+(char)(ch1-1)+(char)(ch2+1)+" ");
+        }
+        //Go forward
+        if(ch2<56){
+            System.out.print(""+ch1+(char)(ch2+1)+" ");
+        }
+        //Up right
+        if(ch1<104 && ch2<56){
+            System.out.print(""+(char)(ch1+1)+(char)(ch2+1)+" ");
+        }
+        //Left
+        if(ch1>97){
+            System.out.print(""+(char)(ch1-1)+ch2+" ");
+        }
+        //Right
+        if(ch1<104){
+            System.out.print(""+(char)(ch1+1)+ch2+" ");
+        }
+        //Down left
+        if(ch1>97 && ch2>49){
+            System.out.print(""+(char)(ch1-1)+(char)(ch2-1)+" ");
+        }
+        //Down
+        if(ch2>49){
+            System.out.print(""+ch1+(char)(ch2-1)+" ");
+        }
+        //Down right
+        if(ch1<104 && ch2>49){
+            System.out.print(""+(char)(ch1+1)+(char)(ch2-1));
         }
     }
 
