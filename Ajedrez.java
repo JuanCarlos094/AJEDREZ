@@ -45,7 +45,10 @@ public class Ajedrez {
         }else if (pieza==4){
             //Torre
         }else if (pieza==5){
-            //Dama
+            pos = setPosicion();
+            if(checkPosicion(pos)){
+                dama(pos);
+            }
         }else if (pieza==6){
             pos = setPosicion();
             if(checkPosicion(pos)){
@@ -284,18 +287,57 @@ public class Ajedrez {
         if(ch1<104){
             System.out.print(""+(char)(ch1+1)+ch2+" ");
         }
-        //Down left
+        //Back left
         if(ch1>97 && ch2>49){
             System.out.print(""+(char)(ch1-1)+(char)(ch2-1)+" ");
         }
-        //Down
+        //Back
         if(ch2>49){
             System.out.print(""+ch1+(char)(ch2-1)+" ");
         }
-        //Down right
+        //Back right
         if(ch1<104 && ch2>49){
             System.out.print(""+(char)(ch1+1)+(char)(ch2-1));
         }
+    }
+
+    public static void dama(String posicion){
+        char ch1 = posicion.charAt(0);
+        char ch2 = posicion.charAt(1);
+        int i,j;
+
+        //Up left
+        alf_up_left(posicion);
+        //Go forward
+        System.out.print("Movimientos de avance --> ");
+        for(i=ch2+1;i<57;i++){
+            System.out.print(""+ch1+(char)i+" ");
+        }
+        System.out.println("\n");
+        //Up right
+        alf_up_right(posicion);
+        //Left
+        System.out.print("Movimiento lateral (izq.) --> ");
+        for(i=ch1-1;i>96;i--){
+            System.out.print(""+(char)i+ch2+" ");
+        }
+        System.out.println("\n");
+        //Right
+        System.out.print("Movimiento lateral (der.) --> ");
+        for(i=ch1+1;i<105;i++){
+            System.out.print(""+(char)i+ch2+" ");
+        }
+        System.out.println("\n");
+        //Back left
+        alf_down_left(posicion);
+        //Back
+        System.out.print("Movimientos de retroceso --> ");
+        for(i=ch2-1;i>48;i--){
+            System.out.print(""+ch1+(char)i+" ");
+        }
+        System.out.println("\n");
+        //Back right
+        alf_down_right(posicion);
     }
 
 }
