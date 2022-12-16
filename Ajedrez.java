@@ -13,7 +13,7 @@ public class Ajedrez {
         compararPiezas(pieza);
 
     }
-    
+
     private static Scanner sc=new Scanner(System.in);
     private static boolean blancas=false;
     private static boolean negras=false;
@@ -22,29 +22,32 @@ public class Ajedrez {
     //metodo validar pieza
     public static void compararPiezas(String pieza){
         String[] allpieces = {"peon", "caballo", "alfil", "torre", "reina", "rey"};
-        
+
         String pos;
 
         if (pieza.equalsIgnoreCase(allpieces[0])){
             pos = setPosicion();
-            if(checkPosicion(pos) == true){
+            if(checkPosicion(pos)){
                 peon(pos);
             }
         }else if (pieza.equalsIgnoreCase(allpieces[1])){
-            
+
             //Aqui se llamaria al metodo que corresponde a la pieza con la que coincide
-        
+
         }else if (pieza.equalsIgnoreCase(allpieces[2])){
             pos = setPosicion();
-            if(checkPosicion(pos) == true){
+            if(checkPosicion(pos)){
                 alf_down_left(pos);
                 alf_down_right(pos);
                 alf_up_left(pos);
                 alf_up_right(pos);
             }
-        
+
         }else if (pieza.equalsIgnoreCase(allpieces[3])){
-            //Aqui se llamaria al metodo que corresponde a la pieza con la que coincide
+            pos = setPosicion();
+            if (checkPosicion(pos)){
+                torre(pos);
+            }
         }else if (pieza.equalsIgnoreCase(allpieces[4])){
             //Aqui se llamaria al metodo que corresponde a la pieza con la que coincide
         }else if (pieza.equalsIgnoreCase(allpieces[5])){
@@ -53,8 +56,8 @@ public class Ajedrez {
             System.out.println("Pieza no valida");
         }
     }
-    
-   
+
+
     //metodo introduccion pieza
     public static String setPieza(){
 
@@ -103,12 +106,12 @@ public class Ajedrez {
             System.out.println(Arrays.toString(ints));
         }
         System.out.println("\n¿En qué posición se encuentra tu pieza?");
-        
+
         return sc.next();
     }
 
     public static boolean checkPosicion(String pos){
-        
+
         String[][] tablero = getTablero();
 
         for (int i = 0; i<tablero.length; i++){
@@ -121,7 +124,7 @@ public class Ajedrez {
         return false;
     }
 
-    
+
     //metodo movimientos peon
     public static void peon(String posicion){
         if(blancas){
@@ -186,7 +189,7 @@ public class Ajedrez {
         for (;ch1>96; ch1--){
             --ch2;
             if (ch2 == 48){
-                 break;
+                break;
             }
             String str = "" + ch1 + ch2;
             System.out.print(str + " ");
@@ -238,7 +241,7 @@ public class Ajedrez {
         char ch1 = alf.charAt(0);
         char ch2 = alf.charAt(1);
         ch1--;
-        
+
         System.out.print("Movimientos diagonal superior (izq.) --> ");
         for(; ch1>96; ch1--){
             ++ch2;
@@ -250,6 +253,65 @@ public class Ajedrez {
         }
 
         System.out.println("\n");
+    }
+
+    public static void torre(String torre){
+        String[][] tablero = getTablero();
+
+        for (int i = 0; i<tablero.length; i++){
+            for (int j = 0; j< tablero.length; j++){
+                if (torre.equalsIgnoreCase(tablero[i][j])){
+
+                    System.out.println("Movimientos hacia abajo:");
+                    for (int i2 = i; i2<tablero.length;){
+                        i2++;
+                        try{
+                            System.out.print(tablero[i2][j] + " ");
+                        }catch (ArrayIndexOutOfBoundsException e){
+                            System.out.print("");
+                        }
+                    }
+                    System.out.println("\n");
+
+                    System.out.println("Movimientos hacia arriba:");
+                    for (int i3 = i; i3>=0; ){
+                        --i3;
+                        try{
+                            System.out.print(tablero[i3][j] + " ");
+                        }catch (ArrayIndexOutOfBoundsException e){
+                            System.out.println("");
+                        }
+                    }
+                    System.out.println("\n");
+
+
+
+                    System.out.println("Movimientos hacia izquierda:");
+                    for (int j2 = j; j2>=0;){
+                        --j2;
+                        try{
+                            System.out.print(tablero[i][j2] + " ");
+                        }catch (ArrayIndexOutOfBoundsException e){
+                            System.out.println("");
+                        }
+                    }
+                    System.out.println("\n");
+
+
+                    System.out.print("Movimientos hacia derecha:");
+                    for (int j3 = j; j3<tablero.length;){
+                        ++j3;
+                        try{
+                            System.out.print(tablero[i][j3] + " ");
+                        }catch (ArrayIndexOutOfBoundsException e){
+                            System.out.println("");
+                        }
+                    }
+
+                }
+            }
+        }
+
     }
 
 }
