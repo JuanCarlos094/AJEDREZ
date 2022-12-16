@@ -1,14 +1,11 @@
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class Ajedrez {
     public static void main(String[]args){
 
-        System.out.println("--------------------------------------");
-        System.out.println("   Bienvenido al juego del Ajedrez.");
-        System.out.println("--------------------------------------");
+        System.out.println("|♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙|");
+        System.out.println("|♖♘♗♕♔  Bienvenido al juego del Ajedrez   ♚♛♝♞♜|");
+        System.out.println("|♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙|");
 
         int pieza = setPieza();
         setColor();
@@ -23,21 +20,20 @@ public class Ajedrez {
 
     //metodo validar pieza
     public static void compararPiezas(int pieza){
-
         String pos;
-
-        if (pieza==1){
+        //Peón
+        if (pieza == 1){
             pos = setPosicion();
             if(checkPosicion(pos)){
                 peon(pos.toLowerCase());
             }
-        }else if (pieza==2){
+            //Caballo
+        }else if (pieza == 2 ){
             pos = setPosicion();
             if(checkPosicion(pos)){
                 caballo(pos.toLowerCase());
             }
-            //Caballo
-
+            //Alfil
         }else if (pieza==3){
             pos = setPosicion();
             if(checkPosicion(pos)){
@@ -46,14 +42,24 @@ public class Ajedrez {
                 alf_up_left(pos.toLowerCase());
                 alf_up_right(pos.toLowerCase());
             }
-
-        }else if (pieza==4){
-            //Torre
-        }else if (pieza==5){
+        //Torre
+        }else if (pieza == 4){
+            pos = setPosicion();
+            if (checkPosicion(pos)){
+                torre(pos.toLowerCase());
+            }
             //Dama
+        }else if (pieza==5){
+            pos = setPosicion();
+            if(checkPosicion(pos)){
+                dama(pos.toLowerCase());
+            }
+            //Rey
         }else if (pieza==6){
             pos = setPosicion();
-            rey(pos.toLowerCase());
+            if(checkPosicion(pos)) {
+                rey(pos.toLowerCase());
+            }
         }else{
             System.out.println("Pieza no valida");
         }
@@ -63,14 +69,28 @@ public class Ajedrez {
     //metodo introduccion pieza
     public static int setPieza(){
 
-        System.out.println("En primer lugar, elige la pieza que deseas.");
-        System.out.println("1. Peón");
-        System.out.println("2. Caballo");
-        System.out.println("3. Alfil");
-        System.out.println("4. Torre");
-        System.out.println("5. Dama");
-        System.out.println("6. Rey");
-        return sc.nextInt();
+        System.out.println("En primer lugar, elige la pieza");
+        System.out.println("1. ♙ Peón");
+        System.out.println("2. ♘ Caballo");
+        System.out.println("3. ♗ Alfil");
+        System.out.println("4. ♖ Torre");
+        System.out.println("5. ♕ Dama");
+        System.out.println("6. ♔ Rey");
+        System.out.println("que deseas:");
+
+        boolean trying;
+        do{
+            trying = true;
+            Scanner pieza_scan= new Scanner(System.in);
+            try{return pieza_scan.nextInt();
+            }catch (InputMismatchException e){
+                System.out.println("Introduce num. entero que corresponde a la pieza!!");
+                trying = false;
+            }
+        }while (!trying);
+
+        return 0;
+
     }
 
 
@@ -263,6 +283,66 @@ public class Ajedrez {
         System.out.println("\n");
     }
 
+    public static void torre(String torre){
+        String[][] tablero = getTablero();
+
+        for (int i = 0; i<tablero.length; i++){
+            for (int j = 0; j< tablero.length; j++){
+                if (torre.equalsIgnoreCase(tablero[i][j])){
+
+                    System.out.println("Movimientos hacia abajo:");
+                    for (int i2 = i; i2<tablero.length;){
+                        i2++;
+                        try{
+                            System.out.print(tablero[i2][j] + " ");
+                        }catch (ArrayIndexOutOfBoundsException e){
+                            System.out.println("");
+                        }
+                    }
+                   // System.out.println("\n");
+
+                    System.out.println("Movimientos hacia arriba:");
+                    for (int i3 = i; i3>=0; ){
+                        --i3;
+                        try{
+                            System.out.print(tablero[i3][j] + " ");
+                        }catch (ArrayIndexOutOfBoundsException e){
+                            System.out.println("");
+                        }
+                    }
+                    //System.out.println("\n");
+
+
+
+                    System.out.println("Movimientos hacia izquierda:");
+                    for (int j2 = j; j2>=0;){
+                        --j2;
+                        try{
+                            System.out.print(tablero[i][j2] + " ");
+                        }catch (ArrayIndexOutOfBoundsException e){
+                            System.out.println("");
+                        }
+                    }
+                    //System.out.println("\n");
+
+
+                    System.out.println("Movimientos hacia derecha:");
+                    for (int j3 = j; j3<tablero.length;){
+                        ++j3;
+                        try{
+                            System.out.print(tablero[i][j3] + " ");
+                        }catch (ArrayIndexOutOfBoundsException e){
+                            System.out.println("");
+                        }
+                    }
+
+                }
+            }
+        }
+
+    }
+
+
     //metodo para el movimiento del rey
     public static void rey(String posicion) {
         char ch1 = posicion.charAt(0);
@@ -375,6 +455,44 @@ public class Ajedrez {
         for (String position : positions) {
             System.out.println(position);
         }
+    }
+    public static void dama(String posicion){
+        char ch1 = posicion.charAt(0);
+        char ch2 = posicion.charAt(1);
+        int i,j;
+
+        //Up left
+        alf_up_left(posicion);
+        //Go forward
+        System.out.print("Movimientos de avance --> ");
+        for(i=ch2+1;i<57;i++){
+            System.out.print(""+ch1+(char)i+" ");
+        }
+        System.out.println("\n");
+        //Up right
+        alf_up_right(posicion);
+        //Left
+        System.out.print("Movimiento lateral (izq.) --> ");
+        for(i=ch1-1;i>96;i--){
+            System.out.print(""+(char)i+ch2+" ");
+        }
+        System.out.println("\n");
+        //Right
+        System.out.print("Movimiento lateral (der.) --> ");
+        for(i=ch1+1;i<105;i++){
+            System.out.print(""+(char)i+ch2+" ");
+        }
+        System.out.println("\n");
+        //Back left
+        alf_down_left(posicion);
+        //Back
+        System.out.print("Movimientos de retroceso --> ");
+        for(i=ch2-1;i>48;i--){
+            System.out.print(""+ch1+(char)i+" ");
+        }
+        System.out.println("\n");
+        //Back right
+        alf_down_right(posicion);
     }
 
 
