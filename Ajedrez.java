@@ -1,4 +1,5 @@
 import java.util.Arrays;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Ajedrez {
@@ -71,7 +72,22 @@ public class Ajedrez {
         System.out.println("4. Torre");
         System.out.println("5. Dama");
         System.out.println("6. Rey");
-        return sc.nextInt();
+        System.out.print("-->");
+
+        boolean trying;
+        do {
+            trying = true;
+            Scanner pieza_scan = new Scanner(System.in);
+            try{
+                return pieza_scan.nextInt();
+            }catch (InputMismatchException e){
+                System.out.println("Introduce num. entero que corresponde a la pieza!!");
+                trying = false;
+            }
+        }while (!trying);
+
+        return 0;
+
     }
 
 
