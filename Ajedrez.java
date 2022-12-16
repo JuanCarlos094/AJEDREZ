@@ -1,15 +1,17 @@
 import java.util.Arrays;
+import java.util.InputMismatchException;
+import java.util.Locale;
 import java.util.Scanner;
 
 public class Ajedrez {
     public static void main(String[]args){
 
-        System.out.println("--------------------------------------");
-        System.out.println("   Bienvenido al juego del Ajedrez.");
-        System.out.println("--------------------------------------");
+        System.out.println("-------------------------------------");
+        System.out.println("Bienvenido al juego del Ajedrez.");
+        System.out.println("-------------------------------------");
 
-        int pieza = setPieza();
         setColor();
+        int pieza = setPieza();
         compararPiezas(pieza);
 
     }
@@ -21,39 +23,51 @@ public class Ajedrez {
 
     //metodo validar pieza
     public static void compararPiezas(int pieza){
-
         String pos;
+        boolean error;
 
-        if (pieza==1){
+        if (pieza == 1){
             pos = setPosicion();
-            if(checkPosicion(pos)){
-                peon(pos);
+            while (!checkPosicion(pos)){
+                pos=setPosicion();
+                checkPosicion(pos);
             }
-        }else if (pieza==2){
+            peon(pos);
+        }else if (pieza == 2 ){
 
-            //Caballo
-
-        }else if (pieza==3){
+            //Aqui se llamaria al metodo que corresponde a la pieza con la que coincide
+        }else if (pieza == 3){
             pos = setPosicion();
-            if(checkPosicion(pos)){
-                alf_down_left(pos);
-                alf_down_right(pos);
-                alf_up_left(pos);
-                alf_up_right(pos);
+            while(!checkPosicion(pos)){
+                pos=setPosicion();
+                checkPosicion(pos);
             }
+            alf_down_left(pos);
+            alf_down_right(pos);
+            alf_up_left(pos);
+            alf_up_right(pos);
 
-        }else if (pieza==4){
-            //Torre
-        }else if (pieza==5){
+        }else if (pieza == 4){
             pos = setPosicion();
-            if(checkPosicion(pos)){
-                dama(pos);
+            while (!checkPosicion(pos)){
+                pos=setPosicion();
+                checkPosicion(pos);
             }
-        }else if (pieza==6){
+            torre(pos);
+        }else if (pieza == 5){
             pos = setPosicion();
-            if(checkPosicion(pos)){
+            while (!checkPosicion(pos)){
+                pos=setPosicion();
+                checkPosicion(pos);
+            }
+            dama(pos);
+        }else if (pieza == 6){
+            pos = setPosicion();
+            while (!checkPosicion(pos)){
+                pos=setPosicion();
+                checkPosicion(pos);
+            }
             rey(pos);
-            }
         }else{
             System.out.println("Pieza no valida");
         }
@@ -62,14 +76,29 @@ public class Ajedrez {
 
     //metodo introduccion pieza
     public static int setPieza(){
-        System.out.println("En primer lugar, elige la pieza que deseas.");
+
+        System.out.println("Elige la pieza que deseas: ");
         System.out.println("1. Peón");
         System.out.println("2. Caballo");
         System.out.println("3. Alfil");
         System.out.println("4. Torre");
         System.out.println("5. Dama");
         System.out.println("6. Rey");
-        return sc.nextInt();
+        System.out.print("-->");
+
+        boolean trying;
+        trying = true;
+        do {
+            Scanner pieza_scan = new Scanner(System.in);
+            try{
+                return pieza_scan.nextInt();
+            }catch (InputMismatchException e){
+                System.out.println("Introduce num. entero que corresponde a la pieza!!");
+                trying = false;
+            }
+        }while (!trying);
+
+        return 0;
     }
 
 
@@ -89,18 +118,29 @@ public class Ajedrez {
     }
 
 
-    public static void setColor(){
-        System.out.println("¿De qué color es tu pieza? B/N.");
-        String color =sc.next();
-        if(color.equalsIgnoreCase("Blanca")||color.equalsIgnoreCase("B")){
-            blancas = true;
-        }
-        else if(color.equalsIgnoreCase("Negra")||color.equalsIgnoreCase("N")){
-            negras = true;
-        }
-        else{
-            System.out.println("No has elegido un color válido.");
-        }
+    public static boolean setColor(){
+        System.out.println("¿De qué color es tu pieza? Blanca/Negra.");
+        String color;
+        boolean trying_color;
+        do{
+            trying_color = true;
+            Scanner color_scan = new Scanner(System.in);
+            color = color_scan.next();
+
+            if(color.equalsIgnoreCase("Blanca")||color.equalsIgnoreCase("B")){
+                return blancas=true;
+            }
+            else if(color.equalsIgnoreCase("Negra")||color.equalsIgnoreCase("N")){
+                return negras=true;
+            }
+            else{
+                System.out.println("No has elegido un color válido!! (Blanca/Negra)");
+                trying_color = false;
+            }
+
+        }while (!trying_color);
+
+        return false;
     }
 
 
@@ -113,7 +153,7 @@ public class Ajedrez {
         }
         System.out.println("\n¿En qué posición se encuentra tu pieza?");
 
-        return sc.next();
+        return sc.next().toLowerCase(Locale.ROOT);
     }
 
     public static boolean checkPosicion(String pos){
@@ -144,13 +184,13 @@ public class Ajedrez {
                 System.out.println("Tu peón se podrá mover a: " + posicion.charAt(0) + "" + movPeon + " o " + posicion.charAt(0) + movPeon1 + " al ser el primer movimiento.");
             }
             else if(posicion.matches("a8|b8|c8|d8|e8|f8|g8|h8")){
-                System.out.println("El peon al estar en la última fila del tablero se convierte en una dama.");
+                System.out.println("El peon al estar en la última fila del tablero se convierte en otra pieza.");
             }
             else{
                 int movPeon = Integer.parseInt(posicion.charAt(1)+"")+1;
                 if(movPeon==8){
                     System.out.println("Tu peón se podrá mover a: " + posicion.charAt(0) + "" + movPeon);
-                    System.out.println("Tu peón ha alcanzado la última fila del tablero, por lo que se convierte en dama.");
+                    System.out.println("Tu peón ha alcanzado la última fila del tablero, por lo que se convierte en otra pieza.");
                 }
                 else {
                     System.out.println("Tu peón se podrá mover a: " + posicion.charAt(0) + "" + movPeon);
@@ -160,7 +200,7 @@ public class Ajedrez {
         }
         else if (negras){
             if(posicion.matches("a1|b1|c1|d1|e1|f1|g1|h1")){
-                System.out.println("El peon al estar en la primera fila del tablero se convierte en una dama.");
+                System.out.println("El peon al estar en la primera fila del tablero se convierte en otra pieza.");
             }
             else if(posicion.matches("a7|b7|c7|d7|e7|f7|g7|h7")){
                 int movPeon = Integer.parseInt(posicion.charAt(1)+"")-1;
@@ -174,7 +214,7 @@ public class Ajedrez {
                 int movPeon = Integer.parseInt(posicion.charAt(1)+"")-1;
                 if(movPeon==1){
                     System.out.println("Tu peón se podrá mover a: " + posicion.charAt(0) + "" + movPeon);
-                    System.out.println("Tu peón ha alcanzado la primera fila del tablero, por lo que se convierte en dama.");
+                    System.out.println("Tu peón ha alcanzado la primera fila del tablero, por lo que se convierte en otra pieza.");
                 }
                 else {
                     System.out.println("Tu peón se podrá mover a: " + posicion.charAt(0) + "" + movPeon);
@@ -261,7 +301,63 @@ public class Ajedrez {
         System.out.println("\n");
     }
 
-    //metodo para el movimiento del rey
+    public static void torre(String torre){
+        String[][] tablero = getTablero();
+
+        for (int i = 0; i<tablero.length; i++){
+            for (int j = 0; j< tablero.length; j++){
+                if (torre.equalsIgnoreCase(tablero[i][j])){
+
+                    System.out.println("Movimientos hacia arriba -->");
+                    for (int i3 = i; i3>=0; ){
+                        --i3;
+                        try{
+                            System.out.print(tablero[i3][j] + " ");
+                        }catch (ArrayIndexOutOfBoundsException e){
+                            System.out.print("");
+                        }
+                    }
+                    System.out.println("\n");
+
+                    System.out.println("Movimientos hacia abajo -->");
+                    for (int i2 = i; i2<tablero.length;){
+                        i2++;
+                        try{
+                            System.out.print(tablero[i2][j] + " ");
+                        }catch (ArrayIndexOutOfBoundsException e){
+                            System.out.print("");
+                        }
+                    }
+                    System.out.println("\n");
+
+                    System.out.println("Movimientos hacia izquierda -->");
+                    for (int j2 = j; j2>=0;){
+                        --j2;
+                        try{
+                            System.out.print(tablero[i][j2] + " ");
+                        }catch (ArrayIndexOutOfBoundsException e){
+                            System.out.print("");
+                        }
+                    }
+                    System.out.println("\n");
+
+
+                    System.out.println("Movimientos hacia derecha -->");
+                    for (int j3 = j; j3<tablero.length;){
+                        ++j3;
+                        try{
+                            System.out.print(tablero[i][j3] + " ");
+                        }catch (ArrayIndexOutOfBoundsException e){
+                            System.out.print("");
+                        }
+                    }
+
+                }
+            }
+        }
+
+    }
+
     public static void rey(String posicion) {
         char ch1 = posicion.charAt(0);
         char ch2 = posicion.charAt(1);
@@ -287,15 +383,15 @@ public class Ajedrez {
         if(ch1<104){
             System.out.print(""+(char)(ch1+1)+ch2+" ");
         }
-        //Back left
+        //Down left
         if(ch1>97 && ch2>49){
             System.out.print(""+(char)(ch1-1)+(char)(ch2-1)+" ");
         }
-        //Back
+        //Down
         if(ch2>49){
             System.out.print(""+ch1+(char)(ch2-1)+" ");
         }
-        //Back right
+        //Down right
         if(ch1<104 && ch2>49){
             System.out.print(""+(char)(ch1+1)+(char)(ch2-1));
         }
@@ -304,12 +400,12 @@ public class Ajedrez {
     public static void dama(String posicion){
         char ch1 = posicion.charAt(0);
         char ch2 = posicion.charAt(1);
-        int i,j;
+        int i;
 
         //Up left
         alf_up_left(posicion);
         //Go forward
-        System.out.print("Movimientos de avance --> ");
+        System.out.print("Movimientos hacia arriba --> ");
         for(i=ch2+1;i<57;i++){
             System.out.print(""+ch1+(char)i+" ");
         }
@@ -317,13 +413,13 @@ public class Ajedrez {
         //Up right
         alf_up_right(posicion);
         //Left
-        System.out.print("Movimiento lateral (izq.) --> ");
+        System.out.print("Movimiento hacia izquierda --> ");
         for(i=ch1-1;i>96;i--){
             System.out.print(""+(char)i+ch2+" ");
         }
         System.out.println("\n");
         //Right
-        System.out.print("Movimiento lateral (der.) --> ");
+        System.out.print("Movimiento hacia derecha --> ");
         for(i=ch1+1;i<105;i++){
             System.out.print(""+(char)i+ch2+" ");
         }
@@ -331,7 +427,7 @@ public class Ajedrez {
         //Back left
         alf_down_left(posicion);
         //Back
-        System.out.print("Movimientos de retroceso --> ");
+        System.out.print("Movimientos hacia abajo --> ");
         for(i=ch2-1;i>48;i--){
             System.out.print(""+ch1+(char)i+" ");
         }
