@@ -223,8 +223,6 @@ public class Ajedrez {
         }
     }
 
-
-
     //metodos para movimientos del alfil segun direccion/sentido diagional
     public static void alf_down_left (String alf){
         char ch1 = alf.charAt(0);
