@@ -87,7 +87,6 @@ public class Ajedrez {
         }while (!trying);
 
         return 0;
-
     }
 
 
@@ -109,16 +108,26 @@ public class Ajedrez {
 
     public static boolean setColor(){
         System.out.println("¿De qué color es tu pieza? Blanca/Negra.");
-        String color =sc.next();
-        if(color.equalsIgnoreCase("Blanca")){
-            return blancas=true;
-        }
-        else if(color.equalsIgnoreCase("Negra")){
-            return negras=true;
-        }
-        else{
-            System.out.println("No has elegido un color válido.");
-        }
+        String color;
+        boolean trying_color;
+        do{
+            trying_color = true;
+            Scanner color_scan = new Scanner(System.in);
+            color = color_scan.next();
+
+            if(color.equalsIgnoreCase("Blanca")){
+                return blancas=true;
+            }
+            else if(color.equalsIgnoreCase("Negra")){
+                return negras=true;
+            }
+            else{
+                System.out.println("No has elegido un color válido!! (Blanca/Negra)");
+                trying_color = false;
+            }
+
+        }while (!trying_color);
+
         return false;
     }
 
