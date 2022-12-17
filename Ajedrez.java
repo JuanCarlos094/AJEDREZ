@@ -327,7 +327,7 @@ public class Ajedrez {
         for (int i = 0; i<tablero.length; i++){
             for (int j = 0; j< tablero.length; j++){
                 if (torre.equalsIgnoreCase(tablero[i][j])){
-                    System.out.println("Movimientos hacia arriba -->");
+                    System.out.print("Movimientos hacia arriba --> ");
                     for (int i3 = i; i3>=0; ){
                         --i3;
                         try{
@@ -338,7 +338,7 @@ public class Ajedrez {
                     }
                     System.out.println("\n");
 
-                    System.out.println("Movimientos hacia abajo -->");
+                    System.out.print("Movimientos hacia abajo --> ");
                     for (int i2 = i; i2<tablero.length;){
                         i2++;
                         try{
@@ -349,7 +349,7 @@ public class Ajedrez {
                     }
                     System.out.println("\n");
 
-                    System.out.println("Movimientos hacia izquierda -->");
+                    System.out.print("Movimientos hacia izquierda --> ");
                     for (int j2 = j; j2>=0;){
                         --j2;
                         try{
@@ -361,7 +361,7 @@ public class Ajedrez {
                     System.out.println("\n");
 
 
-                    System.out.println("Movimientos hacia derecha -->");
+                    System.out.print("Movimientos hacia derecha --> ");
                     for (int j3 = j; j3<tablero.length;){
                         ++j3;
                         try{
@@ -370,6 +370,7 @@ public class Ajedrez {
                             System.out.print("");
                         }
                     }
+                    System.out.println("\n");
                 }
             }
         }
@@ -381,36 +382,44 @@ public class Ajedrez {
 
         System.out.println("El Rey podrá realizar los siguientes movimientos: ");
         //Up left
+        System.out.print("Movimientos diagonal superior (izq.) --> ");
         if(ch1>97 && ch2<56){
-            System.out.print(""+(char)(ch1-1)+(char)(ch2+1)+" ");
+            System.out.println(""+(char)(ch1-1)+(char)(ch2+1)+" \n");
         }
         //Go forward
+        System.out.print("Movimientos hacia arriba --> ");
         if(ch2<56){
-            System.out.print(""+ch1+(char)(ch2+1)+" ");
+            System.out.println(""+ch1+(char)(ch2+1)+" \n");
         }
         //Up right
+        System.out.print("Movimientos diagonal superior (der.) --> ");
         if(ch1<104 && ch2<56){
-            System.out.print(""+(char)(ch1+1)+(char)(ch2+1)+" ");
+            System.out.println(""+(char)(ch1+1)+(char)(ch2+1)+" \n");
         }
         //Left
+        System.out.print("Movimiento hacia izquierda --> ");
         if(ch1>97){
-            System.out.print(""+(char)(ch1-1)+ch2+" ");
+            System.out.println(""+(char)(ch1-1)+ch2+" \n");
         }
         //Right
+        System.out.print("Movimiento hacia derecha --> ");
         if(ch1<104){
-            System.out.print(""+(char)(ch1+1)+ch2+" ");
+            System.out.println(""+(char)(ch1+1)+ch2+" \n");
         }
-        //Down left
+        //Back left
+        System.out.print("Movimientos diagonal inferior (izq.) --> ");
         if(ch1>97 && ch2>49){
-            System.out.print(""+(char)(ch1-1)+(char)(ch2-1)+" ");
+            System.out.println(""+(char)(ch1-1)+(char)(ch2-1)+" \n");
         }
-        //Down
+        //Back
+        System.out.print("Movimientos hacia abajo --> ");
         if(ch2>49){
-            System.out.print(""+ch1+(char)(ch2-1)+" ");
+            System.out.println(""+ch1+(char)(ch2-1)+" \n");
         }
-        //Down right
+        //Back right
+        System.out.print("Movimientos diagonal inferior (der.) --> ");
         if(ch1<104 && ch2>49){
-            System.out.print(""+(char)(ch1+1)+(char)(ch2-1));
+            System.out.println(""+(char)(ch1+1)+(char)(ch2-1)+"\n");
         }
     }
 
