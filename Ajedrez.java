@@ -1,42 +1,98 @@
-import java.util.Arrays;
-import java.util.InputMismatchException;
-import java.util.Locale;
-import java.util.Scanner;
+import java.util.*;
 
 public class Ajedrez {
     public static void main(String[]args){
 
-        System.out.println("-------------------------------------");
-        System.out.println("Bienvenido al juego del Ajedrez.");
-        System.out.println("-------------------------------------");
+        System.out.println("|♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙|");
+        System.out.println("|♖♘♗♕♔  Bienvenido al juego del Ajedrez   ♚♛♝♞♜|");
+        System.out.println("|♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙|");
 
         setColor();
         int pieza = setPieza();
         compararPiezas(pieza);
-
     }
 
     private static Scanner sc=new Scanner(System.in);
     private static boolean blancas=false;
     private static boolean negras=false;
 
+    public static boolean setColor(){
+        String color;
+        boolean trying_color;
+
+        do{
+            System.out.println("\n¿De qué color es tu pieza? Blanca/Negra.");
+            trying_color=true;
+            Scanner color_scan = new Scanner(System.in);
+            color = color_scan.next();
+
+            if(color.equalsIgnoreCase("Blanca")||color.equalsIgnoreCase("B")){
+                return blancas=true;
+            }
+            else if(color.equalsIgnoreCase("Negra")||color.equalsIgnoreCase("N")){
+                return negras=true;
+            }
+            else{
+                System.out.println("No has elegido un color válido!!\n");
+                trying_color = false;
+            }
+        }while (!trying_color);
+
+        return false;
+    }
+
+    //metodo introduccion pieza
+    public static int setPieza(){
+
+        boolean trying;
+        String pieza = null;
+        int numpieza = 0;
+
+        do {
+            Scanner pieza_scan = new Scanner(System.in);
+            trying = true;
+                System.out.println("Elige la pieza que deseas: ");
+                System.out.println("1. ♙ Peón");
+                System.out.println("2. ♘ Caballo");
+                System.out.println("3. ♗ Alfil");
+                System.out.println("4. ♖ Torre");
+                System.out.println("5. ♕ Dama");
+                System.out.println("6. ♔ Rey");
+                System.out.print("-->");
+            try{
+                pieza = pieza_scan.nextLine();
+                if(!pieza.matches("1|2|3|4|5|6")){
+                    throw new Exception("Has introducido un valor no válido, vuelve a intentarlo.\n");
+                }
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+                trying = false;
+            }
+        }while(!trying);
+
+        return Integer.parseInt(pieza);
+    }
 
     //metodo validar pieza
     public static void compararPiezas(int pieza){
         String pos;
         boolean error;
 
-        if (pieza == 1){
+        if (pieza == 1)/*Peon*/{
             pos = setPosicion();
             while (!checkPosicion(pos)){
                 pos=setPosicion();
                 checkPosicion(pos);
             }
             peon(pos);
-        }else if (pieza == 2 ){
-
-            //Aqui se llamaria al metodo que corresponde a la pieza con la que coincide
-        }else if (pieza == 3){
+        }else if (pieza == 2 )/*Caballo*/{
+            pos = setPosicion();
+            while(!checkPosicion(pos)){
+                pos=setPosicion();
+                checkPosicion(pos);
+            }
+            caballo(pos);
+        }else if (pieza == 3)/*Alfil*/{
             pos = setPosicion();
             while(!checkPosicion(pos)){
                 pos=setPosicion();
@@ -46,22 +102,21 @@ public class Ajedrez {
             alf_down_right(pos);
             alf_up_left(pos);
             alf_up_right(pos);
-
-        }else if (pieza == 4){
+        }else if (pieza == 4)/*Torre*/{
             pos = setPosicion();
             while (!checkPosicion(pos)){
                 pos=setPosicion();
                 checkPosicion(pos);
             }
             torre(pos);
-        }else if (pieza == 5){
+        }else if (pieza == 5)/*Dama*/{
             pos = setPosicion();
             while (!checkPosicion(pos)){
                 pos=setPosicion();
                 checkPosicion(pos);
             }
             dama(pos);
-        }else if (pieza == 6){
+        }else if (pieza == 6)/*Rey*/{
             pos = setPosicion();
             while (!checkPosicion(pos)){
                 pos=setPosicion();
@@ -72,35 +127,6 @@ public class Ajedrez {
             System.out.println("Pieza no valida");
         }
     }
-
-
-    //metodo introduccion pieza
-    public static int setPieza(){
-
-        System.out.println("Elige la pieza que deseas: ");
-        System.out.println("1. Peón");
-        System.out.println("2. Caballo");
-        System.out.println("3. Alfil");
-        System.out.println("4. Torre");
-        System.out.println("5. Dama");
-        System.out.println("6. Rey");
-        System.out.print("-->");
-
-        boolean trying;
-        trying = true;
-        do {
-            Scanner pieza_scan = new Scanner(System.in);
-            try{
-                return pieza_scan.nextInt();
-            }catch (InputMismatchException e){
-                System.out.println("Introduce num. entero que corresponde a la pieza!!");
-                trying = false;
-            }
-        }while (!trying);
-
-        return 0;
-    }
-
 
     //metodo mostrar tablero
     public static String[][] getTablero(){
@@ -117,33 +143,6 @@ public class Ajedrez {
         };
     }
 
-
-    public static boolean setColor(){
-        System.out.println("¿De qué color es tu pieza? Blanca/Negra.");
-        String color;
-        boolean trying_color;
-        do{
-            trying_color = true;
-            Scanner color_scan = new Scanner(System.in);
-            color = color_scan.next();
-
-            if(color.equalsIgnoreCase("Blanca")||color.equalsIgnoreCase("B")){
-                return blancas=true;
-            }
-            else if(color.equalsIgnoreCase("Negra")||color.equalsIgnoreCase("N")){
-                return negras=true;
-            }
-            else{
-                System.out.println("No has elegido un color válido!! (Blanca/Negra)");
-                trying_color = false;
-            }
-
-        }while (!trying_color);
-
-        return false;
-    }
-
-
     //metodo para establecer posicion inicial en el tablero
     public static String setPosicion(){
         System.out.println("-------------------------------------");
@@ -156,6 +155,7 @@ public class Ajedrez {
         return sc.next().toLowerCase(Locale.ROOT);
     }
 
+    //metodo para validar la posicion dada
     public static boolean checkPosicion(String pos){
 
         String[][] tablero = getTablero();
@@ -169,7 +169,6 @@ public class Ajedrez {
         }
         return false;
     }
-
 
     //metodo movimientos peon
     public static void peon(String posicion){
@@ -223,6 +222,36 @@ public class Ajedrez {
         }
     }
 
+    //metodo para los movimientos del caballo
+    public static void caballo(String posicion) {
+        String column = String.valueOf(posicion.charAt(0));
+        String row = String.valueOf(posicion.charAt(1));
+
+        int y = column.charAt(0) - 'a';
+        int x = Integer.parseInt(row) - 1;
+
+        int[] dx = {2, 1, -1, -2, -2, -1, 1, 2};
+        int[] dy = {1, 2, 2, 1, -1, -2, -2, -1};
+
+        List<String> positions = new ArrayList<>();
+
+        for (int i = 0; i < dx.length; i++) {
+            int newX = x + dx[i];
+            int newY = y + dy[i];
+
+            if (newX >= 0 && newX < 8 && newY >= 0 && newY < 8) {
+                column = (char) ('a' + newY) + "";
+                row =(newX + 1) + "";
+                String position = column + row;
+                positions.add(position);
+            }
+        }
+        System.out.println("Posiciones posibles del caballo desde la posición " + posicion.charAt(0) + posicion.charAt(1) + ":");
+        for (String position : positions) {
+            System.out.println(position);
+        }
+    }
+
     //metodos para movimientos del alfil segun direccion/sentido diagional
     public static void alf_down_left (String alf){
         char ch1 = alf.charAt(0);
@@ -238,9 +267,7 @@ public class Ajedrez {
             String str = "" + ch1 + ch2;
             System.out.print(str + " ");
         }
-
         System.out.println("\n");
-
     }
 
     public static void alf_down_right (String alf){
@@ -257,10 +284,8 @@ public class Ajedrez {
             String str = "" + ch1 + ch2;
             System.out.print(str + " ");
         }
-
         System.out.println("\n");
     }
-
 
     public static void alf_up_right (String alf){
         char ch1 = alf.charAt(0);
@@ -276,10 +301,8 @@ public class Ajedrez {
             String str = "" + ch1 + ch2;
             System.out.print(str + " ");
         }
-
         System.out.println("\n");
     }
-
 
     public static void alf_up_left (String alf){
         char ch1 = alf.charAt(0);
@@ -295,7 +318,6 @@ public class Ajedrez {
             String str = "" + ch1 + ch2;
             System.out.print(str + " ");
         }
-
         System.out.println("\n");
     }
 
@@ -305,7 +327,6 @@ public class Ajedrez {
         for (int i = 0; i<tablero.length; i++){
             for (int j = 0; j< tablero.length; j++){
                 if (torre.equalsIgnoreCase(tablero[i][j])){
-
                     System.out.println("Movimientos hacia arriba -->");
                     for (int i3 = i; i3>=0; ){
                         --i3;
@@ -349,11 +370,9 @@ public class Ajedrez {
                             System.out.print("");
                         }
                     }
-
                 }
             }
         }
-
     }
 
     public static void rey(String posicion) {
@@ -433,5 +452,4 @@ public class Ajedrez {
         //Back right
         alf_down_right(posicion);
     }
-
 }
