@@ -1,15 +1,38 @@
+import java.awt.desktop.ScreenSleepEvent;
 import java.util.*;
 
 public class Ajedrez {
     public static void main(String[]args){
+        String respuesta;
+        boolean repetir,valido;
 
         System.out.println("|♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙|");
-        System.out.println("|♖♘♗♕♔  Bienvenido al juego del Ajedrez   ♚♛♝♞♜|");
+        System.out.println("|||||||||♖♘♗♕♔   Bienvenido al juego del Ajedrez   ♚♛♝♞♜|||||||||");
         System.out.println("|♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙|");
-
-        setColor();
-        int pieza = setPieza();
-        compararPiezas(pieza);
+        /*
+        Hemos metido el main dentro de un bucle que te pregunta si quieres volver a introducir otra pieza para que el
+        programa se cierre solo cuando decidamos no introducir más piezas.
+         */
+        do {
+            repetir=false;
+            setColor();
+            int pieza = setPieza();
+            compararPiezas(pieza);
+            do {
+                valido=true;
+                System.out.println();
+                System.out.println("¿Quiéres volver a introducir otro pieza? S/N");
+                respuesta = sc.next();
+                if (respuesta.matches("S|s|Si|SI|si|Y|y|YES|yes|Yes")) {
+                    repetir = true;
+                } else if (respuesta.matches("N|n|NO|no|No")) {
+                    System.out.println("Gracias por utilizar el programa.");
+                } else {
+                    System.out.println("No has introducido una respuesta válida. Vuelve a intentarlo.");
+                    valido=false;
+                }
+            }while(!valido);
+        }while(repetir);
         sc.close();
     }
 
@@ -81,7 +104,11 @@ public class Ajedrez {
         return Integer.parseInt(pieza);
     }
     /*
-    Metodo para validar la pieza.
+    Metodo para validar la pieza. Para entrar al método hay que introducir un numero entero (que es el que nos devuelve
+    el método de elegir pieza). Con varios bucles if va comparando ese entero y entrará cuando sea igual al número intro-
+    ducido. Dentro de cada if, te lleva al método de elegir posición, además de llevarte al método que checkea si la
+    posición introducida es válida. Si la posición es válida, te llevará al metodo de la pieza seleccionada. Si la po-
+    sición no es válida, te volverá a pedir que introduzcas la posición.
      */
     public static void compararPiezas(int pieza){
         String pos;
@@ -133,8 +160,10 @@ public class Ajedrez {
             rey(pos);
         }
     }
-
-    //metodo mostrar tablero
+    /*
+    Método para poder llamar al tablero desde otros métodos. Es un array bidimensional de Strings con todas las posicio-
+    nes del tablero.
+     */
     public static String[][] getTablero(){
 
         return new String[][]{
@@ -148,8 +177,10 @@ public class Ajedrez {
                 {"a1", "b1", "c1", "d1", "e1", "f1", "g1", "h1"},
         };
     }
-
-    //metodo para establecer posicion inicial en el tablero
+    /*
+    Metodo para establecer en que posicion inicial está la pieza seleccionada. En primer lugar, muestra en pantalla el
+    tablero con todas las posiciones. A continuación, te pide que introduzcas en que posición se encuentra tu pieza.
+     */
     public static String setPosicion(){
         System.out.println("-------------------------------------");
         String[][] tablero=getTablero();
@@ -160,8 +191,11 @@ public class Ajedrez {
 
         return sc.next().toLowerCase(Locale.ROOT);
     }
-
-    //metodo para validar la posicion dada
+    /*
+    Metodo para validar la posición dada. Este método recorre el tablero posicio por posicion y la va comparando con la
+    posición que hemos introducido. Si esa posición no coincide con ninguna de la del tablero, devuelve un false para
+    que luego vuelva a pedirte que introduzcas la posición.
+     */
     public static boolean checkPosicion(String pos){
 
         String[][] tablero = getTablero();
@@ -175,11 +209,13 @@ public class Ajedrez {
         }
         return false;
     }
-
-    //metodo movimientos peon
+    /*
+    Metodo para los movimientos del peon dada una posición inicial. En primer lugar, depende si la pieza es blanca o ne-
+    gra, entra en un condicional o en otro.
+     */
     public static void peon(String posicion){
-        if(blancas){
-
+        if(blancas){ /*Si es blanca entra a este condicional y entonces va comparando la posición que hemos introducido
+            con varias opciones. Dependiendo de donde este situada la pieza, en pantalla aparecerá una cosa u otra.*/
             if(posicion.matches("a1|b1|c1|d1|e1|f1|g1|h1")){
                 System.out.println("Un peón blanco no puede estar en la primera fila del tablero.");
             }
@@ -201,9 +237,9 @@ public class Ajedrez {
                     System.out.println("Tu peón se podrá mover a: " + posicion.charAt(0) + "" + movPeon);
                 }
             }
-
         }
-        else if (negras){
+        else if (negras){/*Si es negra entra a este condicional y entonces va comparando la posición que hemos introducido
+            con varias opciones. Dependiendo de donde este situada la pieza, en pantalla aparecerá una cosa u otra.*/
             if(posicion.matches("a1|b1|c1|d1|e1|f1|g1|h1")){
                 System.out.println("El peon al estar en la primera fila del tablero se convierte en otra pieza.");
             }
@@ -227,8 +263,12 @@ public class Ajedrez {
             }
         }
     }
-
-    //metodo para los movimientos del caballo
+    /*
+    Metodo para los movimientos del caballo dada una posición inicial. Almacena la posición que hemos dado en dos varia-
+    bles, va haciendo operaciones dentro de un bucle for y almacena los resultados en un Array. Luego, hace una compro-
+    bación del resultado de estas operaciones (para saber si alguna esta fuera del tablero) e imprime el resultado de
+    los movimientos válidos.
+     */
     public static void caballo(String posicion) {
         String column = String.valueOf(posicion.charAt(0));
         String row = String.valueOf(posicion.charAt(1));
@@ -257,8 +297,12 @@ public class Ajedrez {
             System.out.println(position);
         }
     }
-
-    //metodos para movimientos del alfil segun direccion/sentido diagional
+    /*
+    Metodos para los movimientos del alfil dada una posición inicial:
+    Metodo para el movimiento diagonal inferior izquierda. El método almacena la posicion introducida en dos variables
+    y disminuye la variable "letra" en 1. Si la variable "letra" es mayor que el borde del tablero, disminuye la variable
+    "numero" en 1 y así hasta que una de las dos variables se haya salido del tablero.
+     */
     public static void alf_down_left (String alf){
         char ch1 = alf.charAt(0);
         char ch2 = alf.charAt(1);
@@ -275,7 +319,11 @@ public class Ajedrez {
         }
         System.out.println("\n");
     }
-
+    /*
+    Metodo para el movimiento diagonal inferior derecha. El método almacena la posicion introducida en dos variables
+    e incrementa la variable "letra" en 1. Si la variable "letra" es mayor que el borde del tablero, disminuye la variable
+    "numero" en 1 y así hasta que una de las dos variables se haya salido del tablero.
+     */
     public static void alf_down_right (String alf){
         char ch1 = alf.charAt(0);
         char ch2 = alf.charAt(1);
@@ -292,7 +340,11 @@ public class Ajedrez {
         }
         System.out.println("\n");
     }
-
+    /*
+    Metodo para el movimiento diagonal superior derecha. El método almacena la posicion introducida en dos variables
+    y aumenta la variable "letra" en 1. Si la variable "letra" es mayor que el borde del tablero, aumenta la variable
+    "numero" en 1 y así hasta que una de las dos variables se haya salido del tablero.
+     */
     public static void alf_up_right (String alf){
         char ch1 = alf.charAt(0);
         char ch2 = alf.charAt(1);
@@ -309,7 +361,11 @@ public class Ajedrez {
         }
         System.out.println("\n");
     }
-
+    /*
+    Metodo para el movimiento diagonal superior izquierda. El método almacena la posicion introducida en dos variables
+    y disminuye la variable "letra" en 1. Si la variable "letra" es mayor que el borde del tablero, incrementa la varia-
+    ble "numero" en 1 y así hasta que una de las dos variables se haya salido del tablero.
+     */
     public static void alf_up_left (String alf){
         char ch1 = alf.charAt(0);
         char ch2 = alf.charAt(1);
@@ -326,7 +382,10 @@ public class Ajedrez {
         }
         System.out.println("\n");
     }
-
+    /*
+    Metodo para los movimientos de la torre dada una posición inicial. Desde la posición inicial, va incrementando las
+    variables hasta que llegan al borde del tablero con bucles for y condicionales if.
+     */
     public static void torre(String torre){
         String[][] tablero = getTablero();
 
@@ -381,7 +440,11 @@ public class Ajedrez {
             }
         }
     }
-
+    /*
+    Metodo para los movimientos del rey dada una posición. Alamcena la posición introducida en dos variables y va compa-
+    rando esas variables con el código ASCII de los bordes del tablero. Dependiendo del valor de la posición introducida,
+    entrará en un condicional u otro e imprimira las posiciones a las que se puede mover.
+     */
     public static void rey(String posicion) {
         char ch1 = posicion.charAt(0);
         char ch2 = posicion.charAt(1);
@@ -436,7 +499,11 @@ public class Ajedrez {
         }
         System.out.println("\n");
     }
-
+    /*
+    Metodo para los movimientos de la dama dada una posición. Almacena la posición introducida en dos variables. Para los
+    movimientos en diagonal, llama a los métodos del alfil. Para los movimientos en los ejes de coordenadas, usa bucles
+    for que van incrementando o disminuyendo las variables y va imprimiendo las posiciones que puede recorrer la dama.
+     */
     public static void dama(String posicion){
         char ch1 = posicion.charAt(0);
         char ch2 = posicion.charAt(1);
