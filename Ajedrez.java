@@ -47,7 +47,10 @@ public class Ajedrez {
         return false;
     }
     /*
-    Metodo para introducir la pieza deseada.
+    Metodo para introducir la pieza deseada. En pantalla muestra un menú con las seis piezas del ajedrez. Para elegir
+    pieza tienes que introducir el número de la pieza y el método devolverá ese número para la posterior comparación.
+    Si introduces cualquier valor que no sea un número del 1-6 saltará un mensaje de valor no válido y te volverá a
+    pedir que elijas una pieza.
      */
     public static int setPieza(){
         Scanner pieza_scan = new Scanner(System.in);
@@ -77,11 +80,11 @@ public class Ajedrez {
 
         return Integer.parseInt(pieza);
     }
-
-    //metodo validar pieza
+    /*
+    Metodo para validar la pieza.
+     */
     public static void compararPiezas(int pieza){
         String pos;
-        boolean error;
 
         if (pieza == 1)/*Peon*/{
             pos = setPosicion();
@@ -121,15 +124,13 @@ public class Ajedrez {
                 checkPosicion(pos);
             }
             dama(pos);
-        }else if (pieza == 6)/*Rey*/{
+        }else/*Rey*/{
             pos = setPosicion();
             while (!checkPosicion(pos)){
                 pos=setPosicion();
                 checkPosicion(pos);
             }
             rey(pos);
-        }else{
-            System.out.println("Pieza no valida");
         }
     }
 
