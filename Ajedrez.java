@@ -1,4 +1,3 @@
-import java.awt.desktop.ScreenSleepEvent;
 import java.util.*;
 
 public class Ajedrez {
