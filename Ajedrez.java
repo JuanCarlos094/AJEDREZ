@@ -3,26 +3,32 @@ import java.util.*;
 public class Ajedrez {
     public static void main(String[]args){
 
-        System.out.println("|♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙|");
+        System.out.println("|♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙|");
         System.out.println("|♖♘♗♕♔  Bienvenido al juego del Ajedrez   ♚♛♝♞♜|");
-        System.out.println("|♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙|");
+        System.out.println("|♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙|");
 
         setColor();
         int pieza = setPieza();
         compararPiezas(pieza);
+        sc.close();
     }
 
     private static Scanner sc=new Scanner(System.in);
     private static boolean blancas=false;
     private static boolean negras=false;
-
+    /*
+    Metodo para elegir color. Hemos utilizado un método que nos devuelva dos variables de tipo booleano, que dependiendo
+    si introducimos "Blanco" o "Negro", nos devolverá la variable de cada color con valor true. También hemos controlado
+    los errores, por lo que si introduces algo diferente de "Blanco","B","N","Negro" (independientemente de si lo pone-
+    mos en mayúsculas o en minúsculas) te saldrá un mensaje de color no válido y te volvera a pedir que introduzcas un
+    color.
+     */
     public static boolean setColor(){
         String color;
         boolean trying_color;
 
         do{
             System.out.println("\n¿De qué color es tu pieza? Blanca/Negra.");
-            trying_color=true;
             Scanner color_scan = new Scanner(System.in);
             color = color_scan.next();
 
@@ -40,16 +46,15 @@ public class Ajedrez {
 
         return false;
     }
-
-    //metodo introduccion pieza
+    /*
+    Metodo para introducir la pieza deseada.
+     */
     public static int setPieza(){
-
+        Scanner pieza_scan = new Scanner(System.in);
         boolean trying;
         String pieza = null;
-        int numpieza = 0;
 
         do {
-            Scanner pieza_scan = new Scanner(System.in);
             trying = true;
                 System.out.println("Elige la pieza que deseas: ");
                 System.out.println("1. ♙ Peón");
@@ -384,43 +389,51 @@ public class Ajedrez {
         //Up left
         System.out.print("Movimientos diagonal superior (izq.) --> ");
         if(ch1>97 && ch2<56){
-            System.out.println(""+(char)(ch1-1)+(char)(ch2+1)+" \n");
+            System.out.print(""+(char)(ch1-1)+(char)(ch2+1));
         }
+        System.out.println("\n");
         //Go forward
         System.out.print("Movimientos hacia arriba --> ");
         if(ch2<56){
-            System.out.println(""+ch1+(char)(ch2+1)+" \n");
+            System.out.print(""+ch1+(char)(ch2+1));
         }
+        System.out.println("\n");
         //Up right
         System.out.print("Movimientos diagonal superior (der.) --> ");
         if(ch1<104 && ch2<56){
-            System.out.println(""+(char)(ch1+1)+(char)(ch2+1)+" \n");
+            System.out.print(""+(char)(ch1+1)+(char)(ch2+1));
         }
+        System.out.println("\n");
         //Left
         System.out.print("Movimiento hacia izquierda --> ");
         if(ch1>97){
-            System.out.println(""+(char)(ch1-1)+ch2+" \n");
+            System.out.print(""+(char)(ch1-1)+ch2);
         }
+        System.out.println("\n");
         //Right
         System.out.print("Movimiento hacia derecha --> ");
         if(ch1<104){
-            System.out.println(""+(char)(ch1+1)+ch2+" \n");
+            System.out.print(""+(char)(ch1+1)+ch2);
         }
+        System.out.println("\n");
         //Back left
         System.out.print("Movimientos diagonal inferior (izq.) --> ");
         if(ch1>97 && ch2>49){
-            System.out.println(""+(char)(ch1-1)+(char)(ch2-1)+" \n");
+            System.out.print(""+(char)(ch1-1)+(char)(ch2-1));
         }
+        System.out.println("\n");
         //Back
         System.out.print("Movimientos hacia abajo --> ");
         if(ch2>49){
-            System.out.println(""+ch1+(char)(ch2-1)+" \n");
+            System.out.print(""+ch1+(char)(ch2-1));
         }
+        System.out.println("\n");
         //Back right
         System.out.print("Movimientos diagonal inferior (der.) --> ");
         if(ch1<104 && ch2>49){
-            System.out.println(""+(char)(ch1+1)+(char)(ch2-1)+"\n");
+            System.out.print(""+(char)(ch1+1)+(char)(ch2-1));
         }
+        System.out.println("\n");
     }
 
     public static void dama(String posicion){
