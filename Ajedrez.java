@@ -6,7 +6,7 @@ public class Ajedrez {
         boolean repetir,valido;
 
         System.out.println("|♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙|");
-        System.out.println("|||||||||♖♘♗♕♔   Bienvenido al juego del Ajedrez   ♚♛♝♞♜|||||||||");
+        System.out.println("|♖♘♗♕♔  Bienvenido al juego del Ajedrez   ♚♛♝♞♜|");
         System.out.println("|♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙♙|");
         /*
         Hemos metido el main dentro de un bucle que te pregunta si quieres volver a introducir otra pieza para que el
